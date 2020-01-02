@@ -1,11 +1,12 @@
 package crypto;
 
-import bc.Provider;
 import gui.ThreadUtilities;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.BigIntegers;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.security.Security;
 
 /**
  * Standard implementation of parameters for Elgamal encryption.
@@ -78,7 +79,7 @@ public class StdElgamal {
 
     public static void main(String[] args)
             throws Exception {
-        Provider.set();
+        Security.addProvider(new BouncyCastleProvider());
 
         BigInteger p = generateP(512);
         System.out.println(p);

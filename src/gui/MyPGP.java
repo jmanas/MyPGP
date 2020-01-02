@@ -16,6 +16,7 @@ import org.bouncycastle.bcpg.ECDHPublicBCPGKey;
 import org.bouncycastle.bcpg.ECDSAPublicBCPGKey;
 import org.bouncycastle.bcpg.PublicKeyPacket;
 import org.bouncycastle.crypto.ec.CustomNamedCurves;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.math.ec.ECCurve;
 import org.bouncycastle.openpgp.PGPException;
 import org.bouncycastle.openpgp.PGPPublicKey;
@@ -33,6 +34,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.security.SecureRandom;
+import java.security.Security;
 import java.util.List;
 import java.util.*;
 import java.util.prefs.Preferences;
@@ -79,7 +81,7 @@ public class MyPGP {
     }
 
     public static void start() {
-        Provider.set();
+        Security.addProvider(new BouncyCastleProvider());
         try {
             frame = new JFrame(Version.VERSION);
             frame.setIconImage(Icons.getPgpImage());

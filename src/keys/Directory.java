@@ -143,6 +143,8 @@ public class Directory {
             return true;
         if (childname.endsWith(".jar"))
             return true;
+        if (childname.endsWith(".app"))
+            return true;
 //        if (childname.endsWith(".pgp"))
 //            return true;
 //        if (childname.endsWith(".gpg"))

@@ -1,11 +1,12 @@
 package crypto;
 
-import bc.Provider;
 import gui.ThreadUtilities;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.BigIntegers;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.security.Security;
 import java.util.Arrays;
 import java.util.BitSet;
 
@@ -221,8 +222,8 @@ public class GpgElgamal {
 
     public static void main(String[] args)
             throws Exception {
-        Provider.set();
-//        testPerms(2, 5);
+        Security.addProvider(new BouncyCastleProvider());
+        //        testPerms(2, 5);
 //        System.exit(1);
 
         BigInteger p = generateP(1024);

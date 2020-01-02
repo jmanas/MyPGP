@@ -45,27 +45,6 @@ public class Main {
             preferences.put("root", home.getCanonicalPath());
             Info.setHome(home);
 
-//            File jarlib = new File(home, "_lib");
-//            if (!(jarlib.exists() && jarlib.isDirectory()))
-//                jarlib = new File(home, "lib.skip");
-//            if (!(jarlib.exists() && jarlib.isDirectory()))
-//                jarlib = home;
-//
-//            File[] jars = jarlib.listFiles(new FilenameFilter() {
-//                public boolean accept(File dir, String name) {
-//                    return name.endsWith(".jar");
-//                }
-//            });
-//
-//            if (jars != null) {
-//                String version = System.getProperty("java.version");
-//                if (version.startsWith("9")) {
-//                    ClasspathHacker.addFiles9(jars);
-//                } else {
-//                    ClasspathHacker.addFiles8(jars);
-//                }
-//            }
-
             MyPGP.start();
         } catch (NoHomeException nhe) {
 //            MyLogger.record(nhe);

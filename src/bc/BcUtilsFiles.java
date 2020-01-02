@@ -19,7 +19,6 @@ import org.bouncycastle.openpgp.operator.jcajce.*;
 import javax.swing.*;
 import java.io.*;
 import java.security.SecureRandom;
-import java.security.SignatureException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -54,7 +53,7 @@ public class BcUtilsFiles {
             return;
         try (
                 OutputStream os = new BufferedOutputStream(new FileOutputStream(blackFile));
-                OutputStream out = getOutputStream(armor, os);
+                OutputStream out = getOutputStream(armor, os)
         ) {
             JcePGPDataEncryptorBuilder encryptorBuilder =
                     new JcePGPDataEncryptorBuilder(encryptAlgo)
@@ -130,7 +129,7 @@ public class BcUtilsFiles {
             return;
         try (
                 OutputStream os = new BufferedOutputStream(new FileOutputStream(outFile));
-                OutputStream out = getOutputStream(armor, os);
+                OutputStream out = getOutputStream(armor, os)
         ) {
             int signAlgo = publicKey.getAlgorithm();
             int hashAlgo = AlgorithmSelection.getHashAlgo(signerKey);
@@ -198,7 +197,7 @@ public class BcUtilsFiles {
         try (
                 OutputStream os = new BufferedOutputStream(new FileOutputStream(outFile));
                 OutputStream out = getOutputStream(armor, os);
-                BCPGOutputStream bOut = new BCPGOutputStream(out);
+                BCPGOutputStream bOut = new BCPGOutputStream(out)
         ) {
             for (int i = 0; i < signerKeyList.size(); i++) {
                 Key signerKey = signerKeyList.get(i);
@@ -263,7 +262,7 @@ public class BcUtilsFiles {
             return;
         try (
                 OutputStream os = new BufferedOutputStream(new FileOutputStream(blackFile));
-                OutputStream out = getOutputStream(armor, os);
+                OutputStream out = getOutputStream(armor, os)
         ) {
             JcePGPDataEncryptorBuilder encryptorBuilder =
                     new JcePGPDataEncryptorBuilder(encryptAlgo)
@@ -367,7 +366,8 @@ public class BcUtilsFiles {
             throws IOException, PasswordCancelled, PGPException {
         BcUtils.log1(String.format("%s(%s) --> %s",
                 Text.get("decrypt"), blackFile.getName(), redFile.getName()));
-
+        if (blackFile.length() == 0)
+            return;
         try (InputStream is = CRLF.sanitize(blackFile)) {
             PGPEncryptedDataList encryptedDataList = BcUtils.getEncryptedDataList(is, blackFile.getName());
             if (encryptedDataList == null)
@@ -462,7 +462,7 @@ public class BcUtilsFiles {
             throws IOException, PGPException {
         try (
                 InputStream sigIs = new FileInputStream(signatureFile);
-                InputStream decoderStream = PGPUtil.getDecoderStream(sigIs);
+                InputStream decoderStream = PGPUtil.getDecoderStream(sigIs)
         ) {
             PGPObjectFactory pgpObjectFactory = new BcPGPObjectFactory(decoderStream);
 
@@ -533,13 +533,14 @@ public class BcUtilsFiles {
      * @throws IOException        errors.
      * @throws PasswordCancelled  user cancels.
      * @throws PGPException       errors.
-     * @throws SignatureException fail.
      */
     public static void process(File blackFile, Map<Long, char[]> passwords)
-            throws IOException, PasswordCancelled, PGPException, SignatureException {
+            throws IOException, PasswordCancelled, PGPException {
+        if (blackFile.length() == 0)
+            return;
         try (
                 InputStream is = CRLF.sanitize(blackFile);
-                InputStream decoderStream = PGPUtil.getDecoderStream(is);
+                InputStream decoderStream = PGPUtil.getDecoderStream(is)
         ) {
             PGPObjectFactory pgpObjectFactory = new BcPGPObjectFactory(decoderStream);
             Object x;
